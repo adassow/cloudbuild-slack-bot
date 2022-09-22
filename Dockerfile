@@ -2,11 +2,9 @@ FROM golang AS build
 COPY . /source
 WORKDIR /source
 RUN go test /source
-RUN go build -o /source .
-#RUN ls /source
+RUN go build -o cb-slack-bot
 
-#FROM gcr.io/distroless/static
-FROM ubuntu
-COPY --from=build /source/cloudbuild-slack-bot /
+FROM gcr.io/distroless/base
+COPY --from=build /source/cb-slack-bot /
 COPY --from=build /source/environment.env /
-ENTRYPOINT ["/cloudbuild-slack-bot"]
+ENTRYPOINT ["/cb-slack-bot"]

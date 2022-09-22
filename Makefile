@@ -8,5 +8,8 @@ run: build
 	chmod +x cloudbuild-slack-notifier
 	./cloudbuild-slack-notifier
 
+build-docker: test
+	docker build . --tag cloudbuild-slack-notifier:latest
+
 deploy: test
 	./deployment.sh
